@@ -1,49 +1,35 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>CoverIS BLE Config</title>
+  <meta charset="UTF-8">
+  <title>CoverIS BLE Wi-Fi Setup</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input, button { padding: 10px; margin: 5px 0; width: 100%; }
-  </style>
-</head>
-<body>
-  <h2>CoverIS BLE Wi-Fi Setup</h2>
-  <input id="ssid" placeholder="Enter Wi-Fi SSID">
-  <input id="password" type="password" placeholder="Enter Wi-Fi Password">
-  <button onclick="connectAndSend()">Connect & Send to ESP32</button>
-  <p id="status">Status: Waiting</p>
-
-<script>
-  let serviceUUID = '12345678-1234-1234-1234-1234567890ab';
-  let characteristicUUID = 'abcd1234-abcd-1234-abcd-12345678abcd';
-
-  async function connectAndSend() {
-    document.getElementById('status').innerText = 'Status: Scanning for devices...';
-    try {
-      const device = await navigator.bluetooth.requestDevice({
-        filters: [{ name: 'CoverIS-BLE' }],
-        optionalServices: [serviceUUID]
-      });
-
-      const server = await device.gatt.connect();
-      const service = await server.getPrimaryService(serviceUUID);
-      const characteristic = await service.getCharacteristic(characteristicUUID);
-
-      const ssid = document.getElementById('ssid').value;
-      const password = document.getElementById('password').value;
-      const fullText = ssid + '|' + password;
-
-      const encoder = new TextEncoder();
-      await characteristic.writeValue(encoder.encode(fullText));
-
-      document.getElementById('status').innerText = 'Status: Sent "' + fullText + '"!';
-    } catch (error) {
-      document.getElementById('status').innerText = 'Error: ' + error;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: auto;
+      color: #333;
     }
-  }
-</script>
-</body>
-</html>
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    input, select, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980
